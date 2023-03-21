@@ -5,7 +5,6 @@ const PageTitle = tw.div`
   p-3 m-3
   rounded-md
   text-center 
-  font-bold font-xl
 `;
 
 function HomePage() {
