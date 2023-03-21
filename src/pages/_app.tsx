@@ -1,13 +1,13 @@
 import type { AppProps } from 'next/app';
 
-import { iranSansFont } from '@/helpers/font-utils';
+import MainLayout from '@/components/layout/main-layout';
 
-import '@/styles/globals.css';
+import '@/assets/styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={iranSansFont.className}>
+    <MainLayout>
       <Component {...pageProps} />
-    </div>
+    </MainLayout>
   );
 }
