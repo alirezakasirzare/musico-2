@@ -19,7 +19,6 @@ interface ITopCarouselProps {
 
 function TopCarousel(props: ITopCarouselProps) {
   const { items } = props;
-
   return (
     <Swiper
       modules={[Autoplay]}
@@ -29,10 +28,10 @@ function TopCarousel(props: ITopCarouselProps) {
       loop
     >
       {items.map((item) => (
-        <SwiperSlide key={item.id}>
-          <Link href={item.id}>
+        <SwiperSlide key={item.path}>
+          <Link href={item.path}>
             <Image
-              src={item.image}
+              src={process.env.NEXT_PUBLIC_BASE_IMAGE_SRC + item.image}
               alt={item.text}
               width={1500}
               height={300}
