@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
+import { useState } from 'react';
 
 import MenuHeader from './menu-header';
 import SearchHeader from './search-header';
+import MobileMenu from './mobile-menu';
+import { FaBars } from 'react-icons/fa';
 
 const Header = tw.header`
   flex justify-between items-center
@@ -18,24 +21,43 @@ const HeaderContent = tw.div`
 `;
 
 const HeaderTitle = tw.h1`
+  flex items-center gap-1
   font-bold
   transition-colors
   text-gray-500 hover:text-gray-600 text-lg
 `;
 
+const MobileMenuButtuon = tw.button`
+  sm:hidden
+`;
+
 function MainHeader() {
+  const [activeMobileMenu, setActiveMobileMenu] = useState(false);
+
+  const openMobileMenu = () => setActiveMobileMenu(true);
+  const closeMobileMenu = () => setActiveMobileMenu(false);
+
   return (
-    <Header>
-      <HeaderContent>
-        <Link href="/">
-          <HeaderTitle>موزیکو</HeaderTitle>
-        </Link>
+    <>
+      <Header>
+        <HeaderContent>
+          <Link href="/">
+            <HeaderTitle>
+              <MobileMenuButtuon onClick={openMobileMenu}>
+                <FaBars />
+              </MobileMenuButtuon>
+              موزیکو
+            </HeaderTitle>
+          </Link>
 
-        <SearchHeader />
-      </HeaderContent>
+          <SearchHeader />
+        </HeaderContent>
 
-      <MenuHeader />
-    </Header>
+        <MenuHeader />
+      </Header>
+
+      <MobileMenu active={activeMobileMenu} onClose={closeMobileMenu} />
+    </>
   );
 }
 

@@ -3,17 +3,19 @@ import tw from 'tailwind-styled-components';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const Menu = tw.nav`
-  hidden sm:block
+const Menu = tw.nav<{ $vertical: boolean }>`
+  ${({ $vertical }) => !$vertical && 'hidden sm:block'}
 `;
 
-const MenuList = tw.ul`
+const MenuList = tw.ul<{ $vertical: boolean }>`
   flex
   list-none
+  ${({ $vertical }) => ($vertical ? 'flex-col' : 'flex-row')}
 `;
 
-const MenuListItem = tw.li`
+const MenuListItem = tw.li<{ $vertical: boolean }>`
   px-1
+  ${({ $vertical }) => $vertical && 'py-0.5'}
 `;
 
 const MenuListLink = tw(Link)`
@@ -23,14 +25,19 @@ const MenuListLink = tw(Link)`
   p-0.5
 `;
 
-const Line = motion(tw.div`
+const Line = motion(tw.div<{ $vertical: boolean }>`
     absolute left-0 -bottom-1
-    w-full
-    h-0.5
    bg-gray-300
+  ${({ $vertical }) => ($vertical ? 'w-0.5 h-full' : 'w-full h-0.5')}
 `);
 
-function MenuHeader() {
+interface IMenuHeader {
+  vertical?: boolean;
+}
+
+function MenuHeader(props: IMenuHeader) {
+  const { vertical } = props;
+
   const [menuList, setMenuList] = useState<
     { text: string; id: string; hovered: boolean }[]
   >([
@@ -70,16 +77,18 @@ function MenuHeader() {
   };
 
   return (
-    <Menu>
-      <MenuList onMouseLeave={unHoveredMenu}>
+    <Menu $vertical={!!vertical}>
+      <MenuList onMouseLeave={unHoveredMenu} $vertical={!!vertical}>
         {menuList.map((menuItem) => (
-          <MenuListItem key={menuItem.id}>
+          <MenuListItem key={menuItem.id} $vertical={!!vertical}>
             <MenuListLink
               href={menuItem.id}
               onMouseEnter={() => hoverMenuItem(menuItem.id)}
             >
               {menuItem.text}
-              {menuItem.hovered && <Line layoutId="underline" />}
+              {menuItem.hovered && (
+                <Line layoutId="underline" $vertical={!!vertical} />
+              )}
             </MenuListLink>
           </MenuListItem>
         ))}
