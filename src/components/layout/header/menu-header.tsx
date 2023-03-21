@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 
+const Menu = tw.nav`
+  hidden sm:block
+`;
+
 const MenuList = tw.ul`
   flex
   list-none
@@ -14,6 +18,8 @@ const MenuListLink = tw(Link)`
   block
   text-gray-500 text-sm
   p-0.5
+  border-b-2 border-transparent hover:border-gray-500
+  transition-colors
 `;
 
 function MenuHeader() {
@@ -33,7 +39,7 @@ function MenuHeader() {
   ];
 
   return (
-    <nav>
+    <Menu>
       <MenuList>
         {menuList.map((menuItem) => (
           <MenuListItem key={menuItem.id}>
@@ -41,7 +47,7 @@ function MenuHeader() {
           </MenuListItem>
         ))}
       </MenuList>
-    </nav>
+    </Menu>
   );
 }
 

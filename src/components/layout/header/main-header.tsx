@@ -12,25 +12,27 @@ const Header = tw.header`
   w-full p-2
 `;
 
-const ContentHeader = tw.div`
-  flex gap-3 items-center
+const HeaderContent = tw.div`
+  flex gap-3 justify-between sm:justify-start items-center
+  w-full sm:w-1/2
 `;
 
-const HeadTitle = tw.h1`
+const HeaderTitle = tw.h1`
   font-bold
-  text-gray-500
+  transition-colors
+  text-gray-500 hover:text-gray-600 text-lg
 `;
 
 function MainHeader() {
   return (
     <Header>
-      <ContentHeader>
+      <HeaderContent>
         <Link href="/">
-          <HeadTitle>موزیکو</HeadTitle>
+          <HeaderTitle>موزیکو</HeaderTitle>
         </Link>
 
         <SearchHeader />
-      </ContentHeader>
+      </HeaderContent>
 
       <MenuHeader />
     </Header>
