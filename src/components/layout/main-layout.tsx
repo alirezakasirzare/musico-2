@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import tw from 'tailwind-styled-components';
 
 import MainHeader from './header/main-header';
+import MainFooter from './main-footer';
 import { iranSansFont } from '@/helpers/font-utils';
 
 const MainContent = tw.main`
@@ -19,6 +20,7 @@ function MainLayout(props: MainLayoutProps) {
     <div className={iranSansFont.className}>
       <MainHeader />
       <MainContent>{children}</MainContent>
+      <MainFooter />
     </div>
   );
 }
