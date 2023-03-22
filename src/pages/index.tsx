@@ -18,7 +18,7 @@ import {
   TopSliderModel,
 } from '@/types/models-type';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
-import { FaMusic } from 'react-icons/fa';
+import { FaMusic, FaImage } from 'react-icons/fa';
 import { LinkCardInterface } from '@/types/cards-type';
 import { TopCarouselInterface } from '@/types/sliders-type';
 
@@ -102,7 +102,7 @@ function HomePage(props: HomePageProps) {
 
       <LatestContentGrid>
         <ContentList items={musicItems} title="موزیک های اخیر" icon={FaMusic} />
-        <ContentList items={albumItems} title="آلبوم های اخیر" icon={FaMusic} />
+        <ContentList items={albumItems} title="آلبوم های اخیر" icon={FaImage} />
       </LatestContentGrid>
 
       <LinkCardLists items={categoryItems} overlayCards bigger />

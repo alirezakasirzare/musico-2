@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import tw from 'tailwind-styled-components';
 import { useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
@@ -7,6 +8,7 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 import Backdrop from '@/components/ui/modals/backdrop';
 import MenuHeader from './menu-header';
+import girlImage from '@/assets/images/menu/girl.jpg';
 
 const Container = motion(tw.div`
   absolute right-0 top-0
@@ -23,7 +25,9 @@ const Head = tw.div`
 `;
 
 const Body = tw.div`
+  flex flex-col justify-between
   py-2
+  h-full
 `;
 
 interface MobileMenuProps {
@@ -47,7 +51,7 @@ function MobileMenu(props: MobileMenuProps) {
   return (
     <AnimatePresence>
       {active && (
-        <Backdrop onClick={onClose}>
+        <Backdrop onClick={onClose} blur>
           <Container
             initial={{ x: '100%' }}
             exit={{ x: '100%' }}
@@ -63,6 +67,14 @@ function MobileMenu(props: MobileMenuProps) {
             </Head>
             <Body>
               <MenuHeader vertical />
+
+              <Image
+                width={400}
+                height={400}
+                alt="girl-listten-to-music"
+                src={girlImage}
+                className="w-full"
+              />
             </Body>
           </Container>
         </Backdrop>
