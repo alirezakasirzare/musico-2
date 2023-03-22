@@ -64,6 +64,12 @@ function HomePage(props: HomePageProps) {
           icon={FaMusic}
         />
       </LatestContentGrid>
+
+      <LinkCardLists
+        items={[...linkCardItems, ...linkCardItems, ...linkCardItems]}
+        overlayCards
+        bigger
+      />
     </>
   );
 }
