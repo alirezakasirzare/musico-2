@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
+import { useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { AnimatePresence, motion } from 'framer-motion';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 import Backdrop from '@/components/ui/modals/backdrop';
 import MenuHeader from './menu-header';
@@ -31,6 +33,16 @@ interface MobileMenuProps {
 
 function MobileMenu(props: MobileMenuProps) {
   const { active, onClose } = props;
+
+  useEffect(() => {
+    if (active) {
+      disableBodyScroll(document.body);
+    } else {
+      enableBodyScroll(document.body);
+    }
+
+    return () => enableBodyScroll(document.body);
+  }, [active]);
 
   return (
     <AnimatePresence>

@@ -9,7 +9,7 @@ import PrevSlide from './controls/prev-slide';
 import type { TopCarouselInterface } from '@/types/sliders-type';
 
 const SlideControls = tw.div`
-  opacity-0 group-hover:opacity-100
+  md:opacity-0 group-hover:opacity-100
   flex justify-center items-center gap-2
   absolute right-5 bottom-5 z-10
   transition-opacity

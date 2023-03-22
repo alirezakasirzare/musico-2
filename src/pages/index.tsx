@@ -1,10 +1,20 @@
+import tw from 'tailwind-styled-components';
+
 import TopCarousel from '@/components/ui/carousels/top-carousel';
 import LinkCardLists from '@/components/ui/lists/link-card-list';
+import ContentList from '@/components/content/content-list';
 import { artistsApi, topSliderApi } from '@/api/req-api';
-import type { ArtistModel, TopSliderModel } from '@/types/models-type';
-import { LinkCardInterface } from '@/types/cards-type';
+import { ArtistModel, TopSliderModel } from '@/types/models-type';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
+import { FaMusic } from 'react-icons/fa';
+import { LinkCardInterface } from '@/types/cards-type';
 import { TopCarouselInterface } from '@/types/sliders-type';
+
+const LatestContentGrid = tw.div`
+  grid grid-cols-1 md:grid-cols-2 gap-8
+  px-5 py-10
+  bg-gray-100 
+`;
 
 interface HomePageProps {
   topCarousels: TopSliderModel[];
@@ -41,6 +51,19 @@ function HomePage(props: HomePageProps) {
       <TopCarousel items={carouselItems} />
 
       <LinkCardLists items={linkCardItems} />
+
+      <LatestContentGrid>
+        <ContentList
+          items={linkCardItems}
+          title="موزیک های اخیر"
+          icon={FaMusic}
+        />
+        <ContentList
+          items={linkCardItems}
+          title="موزیک های اخیر"
+          icon={FaMusic}
+        />
+      </LatestContentGrid>
     </>
   );
 }

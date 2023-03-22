@@ -10,7 +10,7 @@ const CardLink = tw(Link)`
 `;
 
 const CardImage = tw(Image)`
-  rounded-md
+  rounded-sm
   w-full
 `;
 

@@ -10,8 +10,8 @@ import { FaBars } from 'react-icons/fa';
 const Header = tw.header`
   flex justify-between items-center
   border-b border-gray-100
-  bg-gray-50
-  fixed top-0 left-0
+  bg-gray-50/90 backdrop-blur	
+  fixed top-0 left-0 z-40
   w-full p-2
 `;
 

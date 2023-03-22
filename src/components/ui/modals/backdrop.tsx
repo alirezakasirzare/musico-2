@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 
 const Curtain = motion(tw.div`
-  absolute left-0 top-0 z-50
+  fixed left-0 top-0 z-50
   w-full h-full
   bg-gray-500/50
 `);
