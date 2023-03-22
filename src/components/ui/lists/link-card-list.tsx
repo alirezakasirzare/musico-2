@@ -1,6 +1,7 @@
 import tw from 'tailwind-styled-components';
 
 import LinkCard from '../cards/link-card';
+import FadeViewport from '@/components/animations/fade-viewport';
 import { LinkCardInterface } from '@/types/cards-type';
 
 const List = tw.ul<{ $bigger: boolean }>`
@@ -22,7 +23,9 @@ function LinkCardLists(props: LinkCardListsProps) {
     <List $bigger={!!bigger}>
       {items.map((item) => (
         <li key={item.text}>
-          <LinkCard card={item} overlay={overlayCards} />
+          <FadeViewport>
+            <LinkCard card={item} overlay={overlayCards} />
+          </FadeViewport>
         </li>
       ))}
     </List>

@@ -2,6 +2,7 @@ import tw from 'tailwind-styled-components';
 import { IconType } from 'react-icons';
 
 import HorizentalLinkCard from '../ui/cards/horizental-link-card';
+import FadeViewport from '../animations/fade-viewport';
 import { LinkCardInterface } from '@/types/cards-type';
 
 const Header = tw.header`
@@ -33,7 +34,9 @@ function ContentList(props: MusicPlaylistProps) {
       <ul>
         {items.map((item) => (
           <li key={item.text} className="mb-2 last:mb-0 h-20">
-            <HorizentalLinkCard {...item} />
+            <FadeViewport>
+              <HorizentalLinkCard {...item} />
+            </FadeViewport>
           </li>
         ))}
       </ul>
