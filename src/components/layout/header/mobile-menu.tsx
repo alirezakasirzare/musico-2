@@ -24,12 +24,12 @@ const Body = tw.div`
   py-2
 `;
 
-interface IMobileProps {
+interface MobileMenuProps {
   active: boolean;
   onClose: () => void;
 }
 
-function MobileMenu(props: IMobileProps) {
+function MobileMenu(props: MobileMenuProps) {
   const { active, onClose } = props;
 
   return (

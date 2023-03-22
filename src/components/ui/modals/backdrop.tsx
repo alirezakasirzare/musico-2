@@ -9,12 +9,12 @@ const Curtain = motion(tw.div`
   bg-gray-500/50
 `);
 
-interface IBackdrop {
+interface BackdropProps {
   children: ReactNode;
   onClick?: () => void;
 }
 
-function Backdrop(props: IBackdrop) {
+function Backdrop(props: BackdropProps) {
   const { children, onClick } = props;
 
   return createPortal(

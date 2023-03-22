@@ -1,5 +1,4 @@
-export interface ITopCarousel {
-  id: number;
+export interface LinkCardInterface {
   text: string;
   image: string;
   path: string;

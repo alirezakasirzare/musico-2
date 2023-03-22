@@ -31,11 +31,11 @@ const Line = motion(tw.div<{ $vertical: boolean }>`
   ${({ $vertical }) => ($vertical ? 'w-0.5 h-full' : 'w-full h-0.5')}
 `);
 
-interface IMenuHeader {
+interface MenuHeaderProps {
   vertical?: boolean;
 }
 
-function MenuHeader(props: IMenuHeader) {
+function MenuHeader(props: MenuHeaderProps) {
   const { vertical } = props;
 
   const [menuList, setMenuList] = useState<

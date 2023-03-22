@@ -6,19 +6,19 @@ import { Autoplay } from 'swiper';
 
 import NextSlide from './controls/next-slide';
 import PrevSlide from './controls/prev-slide';
-import { ITopCarousel } from '@/types/slider-types';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
+import type { TopCarouselInterface } from '@/types/sliders-type';
 
 const SlideControls = tw.div`
   flex justify-center items-center gap-2
   absolute right-5 bottom-5 z-10
 `;
 
-interface ITopCarouselProps {
-  items: ITopCarousel[];
+interface TopCarouselProps {
+  items: TopCarouselInterface[];
 }
 
-function TopCarousel(props: ITopCarouselProps) {
+function TopCarousel(props: TopCarouselProps) {
   const { items } = props;
   return (
     <Swiper
@@ -29,7 +29,7 @@ function TopCarousel(props: ITopCarouselProps) {
       loop
     >
       {items.map((item) => (
-        <SwiperSlide key={item.id}>
+        <SwiperSlide key={item.text}>
           <Link href={item.path}>
             <Image
               src={IMAGE_BASE_URL + item.image}

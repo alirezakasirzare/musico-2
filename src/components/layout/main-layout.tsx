@@ -8,11 +8,11 @@ const MainContent = tw.main`
   mt-[47px]
 `;
 
-interface IMainLayout {
+interface MainLayoutProps {
   children: ReactNode;
 }
 
-function MainLayout(props: IMainLayout) {
+function MainLayout(props: MainLayoutProps) {
   const { children } = props;
 
   return (

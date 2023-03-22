@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 
 import LinkCard from '../cards/link-card';
-import { ILinkCard } from '@/types/cards-types';
+import { LinkCardInterface } from '@/types/cards-type';
 
 const List = tw.ul`
   grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5
@@ -9,7 +9,7 @@ const List = tw.ul`
 `;
 
 interface LinkCardListsProps {
-  items: ILinkCard[];
+  items: LinkCardInterface[];
 }
 
 function LinkCardLists(props: LinkCardListsProps) {
@@ -18,7 +18,7 @@ function LinkCardLists(props: LinkCardListsProps) {
   return (
     <List>
       {items.map((item) => (
-        <li key={item.id}>
+        <li key={item.text}>
           <LinkCard card={item} />
         </li>
       ))}

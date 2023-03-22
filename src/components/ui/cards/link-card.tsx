@@ -1,11 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ILinkCard } from '@/types/cards-types';
-import { IMAGE_BASE_URL } from '@/config/setting-config';
+import type { LinkCardInterface } from '@/types/cards-type';
 
 interface LinkCardProps {
-  card: ILinkCard;
+  card: LinkCardInterface;
 }
 
 function LinkCard(props: LinkCardProps) {
@@ -13,9 +12,9 @@ function LinkCard(props: LinkCardProps) {
 
   return (
     <div>
-      <Link href={`/artists/${card.id}`}>
+      <Link href={card.path}>
         <Image
-          src={IMAGE_BASE_URL + card.image}
+          src={card.image}
           alt={card.text}
           width={200}
           height={200}
