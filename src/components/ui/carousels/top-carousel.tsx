@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper';
+import { Autoplay, EffectFade } from 'swiper';
 
 import NextSlide from './controls/next-slide';
 import PrevSlide from './controls/prev-slide';
@@ -23,12 +23,13 @@ function TopCarousel(props: TopCarouselProps) {
   const { items } = props;
   return (
     <Swiper
-      modules={[Autoplay]}
+      modules={[Autoplay, EffectFade]}
       spaceBetween={0}
       slidesPerView={1}
       autoplay={{ pauseOnMouseEnter: true }}
       loop
       className="group"
+      effect="fade"
     >
       {items.map((item) => (
         <SwiperSlide key={item.text}>

@@ -19,6 +19,7 @@ function MainLayout(props: MainLayoutProps) {
   return (
     <div className={iranSansFont.className}>
       <MainHeader />
+      <div id="modal-container"></div>
       <MainContent>{children}</MainContent>
       <MainFooter />
     </div>
