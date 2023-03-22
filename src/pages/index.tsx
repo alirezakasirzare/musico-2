@@ -4,15 +4,28 @@ import { artistsApi, topSliderApi } from '@/api/req-api';
 import type { ArtistModel, TopSliderModel } from '@/types/models-type';
 import { LinkCardInterface } from '@/types/cards-type';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
+import { TopCarouselInterface } from '@/types/sliders-type';
 
 interface HomePageProps {
-  carouselItems: TopSliderModel[];
+  topCarousels: TopSliderModel[];
   artists: ArtistModel[];
 }
 
 function HomePage(props: HomePageProps) {
-  const { carouselItems, artists } = props;
+  const { topCarousels, artists } = props;
 
+  // carousel items
+  const carouselItems: TopCarouselInterface[] = topCarousels.map((carousel) => {
+    const newCarousel: LinkCardInterface = {
+      image: IMAGE_BASE_URL + carousel.image,
+      path: carousel.path,
+      text: carousel.text,
+    };
+
+    return newCarousel;
+  });
+
+  // lnik card items
   const linkCardItems: LinkCardInterface[] = artists.map((artist) => {
     const newArtist: LinkCardInterface = {
       image: `${IMAGE_BASE_URL}/${artist.image}`,
@@ -33,13 +46,13 @@ function HomePage(props: HomePageProps) {
 }
 
 export async function getStaticProps() {
-  const carouselItems = await topSliderApi.getAll();
+  const topCarousels = await topSliderApi.getAll();
 
-  const artists = await artistsApi.getSome(4);
+  const artists = await artistsApi.getSome(6);
 
   return {
     props: {
-      carouselItems,
+      topCarousels,
       artists,
     },
   };

@@ -1,7 +1,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import tw from 'tailwind-styled-components';
 import type { LinkCardInterface } from '@/types/cards-type';
+
+const CardLink = tw(Link)`
+  hover:brightness-95 
+  transition-all
+`;
+
+const CardImage = tw(Image)`
+  rounded-md
+  w-full
+`;
+
+const CardText = tw.h3`
+  text-sm text-center text-gray-400
+  p-2
+`;
 
 interface LinkCardProps {
   card: LinkCardInterface;
@@ -12,16 +28,10 @@ function LinkCard(props: LinkCardProps) {
 
   return (
     <div>
-      <Link href={card.path}>
-        <Image
-          src={card.image}
-          alt={card.text}
-          width={200}
-          height={200}
-          className="rounded-full w-[200px] h-[200px] mx-auto block mb-3 border-4 border-blue-500"
-        />
-        <h3 className="text-center text-gray-500">{card.text}</h3>
-      </Link>
+      <CardLink href={card.path}>
+        <CardImage src={card.image} alt={card.text} width={400} height={400} />
+        <CardText>{card.text}</CardText>
+      </CardLink>
     </div>
   );
 }

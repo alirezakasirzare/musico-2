@@ -6,12 +6,13 @@ import { Autoplay } from 'swiper';
 
 import NextSlide from './controls/next-slide';
 import PrevSlide from './controls/prev-slide';
-import { IMAGE_BASE_URL } from '@/config/setting-config';
 import type { TopCarouselInterface } from '@/types/sliders-type';
 
 const SlideControls = tw.div`
+  opacity-0 group-hover:opacity-100
   flex justify-center items-center gap-2
   absolute right-5 bottom-5 z-10
+  transition-opacity
 `;
 
 interface TopCarouselProps {
@@ -27,12 +28,13 @@ function TopCarousel(props: TopCarouselProps) {
       slidesPerView={1}
       autoplay={{ pauseOnMouseEnter: true }}
       loop
+      className="group"
     >
       {items.map((item) => (
         <SwiperSlide key={item.text}>
           <Link href={item.path}>
             <Image
-              src={IMAGE_BASE_URL + item.image}
+              src={item.image}
               alt={item.text}
               width={1500}
               height={300}
