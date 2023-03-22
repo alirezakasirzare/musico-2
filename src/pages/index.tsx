@@ -3,10 +3,18 @@ import tw from 'tailwind-styled-components';
 import TopCarousel from '@/components/ui/carousels/top-carousel';
 import LinkCardLists from '@/components/ui/lists/link-card-list';
 import ContentList from '@/components/content/content-list';
-import { artistsApi, topSliderApi, categoryApi } from '@/api/req-api';
 import {
+  artistsApi,
+  topSliderApi,
+  categoryApi,
+  musicApi,
+  albumApi,
+} from '@/api/req-api';
+import {
+  AlbumModel,
   ArtistModel,
   CategoryModel,
+  MusicModel,
   TopSliderModel,
 } from '@/types/models-type';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
@@ -24,10 +32,12 @@ interface HomePageProps {
   topCarousels: TopSliderModel[];
   artists: ArtistModel[];
   categories: CategoryModel[];
+  musics: MusicModel[];
+  albums: AlbumModel[];
 }
 
 function HomePage(props: HomePageProps) {
-  const { topCarousels, artists, categories } = props;
+  const { topCarousels, artists, categories, musics, albums } = props;
 
   // carousel items
   const carouselItems: TopCarouselInterface[] = topCarousels.map((carousel) => {
@@ -62,6 +72,28 @@ function HomePage(props: HomePageProps) {
     return newCategory;
   });
 
+  // musics
+  const musicItems: LinkCardInterface[] = musics.map((music) => {
+    const newCategory: LinkCardInterface = {
+      image: `${IMAGE_BASE_URL}/${music.image}`,
+      path: `/artist/${music.id}`,
+      text: music.name,
+    };
+
+    return newCategory;
+  });
+
+  // albums
+  const albumItems: LinkCardInterface[] = albums.map((album) => {
+    const newCategory: LinkCardInterface = {
+      image: `${IMAGE_BASE_URL}/${album.image}`,
+      path: `/artist/${album.id}`,
+      text: album.name,
+    };
+
+    return newCategory;
+  });
+
   return (
     <>
       <TopCarousel items={carouselItems} />
@@ -69,16 +101,8 @@ function HomePage(props: HomePageProps) {
       <LinkCardLists items={linkCardItems} />
 
       <LatestContentGrid>
-        <ContentList
-          items={linkCardItems}
-          title="موزیک های اخیر"
-          icon={FaMusic}
-        />
-        <ContentList
-          items={linkCardItems}
-          title="موزیک های اخیر"
-          icon={FaMusic}
-        />
+        <ContentList items={musicItems} title="موزیک های اخیر" icon={FaMusic} />
+        <ContentList items={albumItems} title="آلبوم های اخیر" icon={FaMusic} />
       </LatestContentGrid>
 
       <LinkCardLists items={categoryItems} overlayCards bigger />
@@ -91,6 +115,10 @@ export async function getStaticProps() {
 
   const artists = await artistsApi.getSome(6);
 
+  const musics = await musicApi.getAll();
+
+  const albums = await albumApi.getAll();
+
   const categories = await categoryApi.getAll();
 
   return {
@@ -98,6 +126,8 @@ export async function getStaticProps() {
       topCarousels,
       artists,
       categories,
+      musics,
+      albums,
     },
   };
 }
