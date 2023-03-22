@@ -5,18 +5,18 @@ import tw from 'tailwind-styled-components';
 import type { LinkCardInterface } from '@/types/cards-type';
 
 const CardLink = tw(Link)`
+  block
   relative
   group
+  rounded-sm
+  overflow-hidden
 `;
 
 const CardImage = tw(Image)<{ $overlay: boolean }>`
-  rounded-sm
   w-full
   transition-all
-  ${({ $overlay }) =>
-    $overlay
-      ? 'brightness-50 group-hover:brightness-75'
-      : 'group-hover:brightness-75'}
+  group-hover:brightness-90
+  ${({ $overlay }) => ($overlay ? '' : '')}
 `;
 
 const CardText = tw.h3<{ $overlay: boolean }>`
@@ -25,11 +25,12 @@ const CardText = tw.h3<{ $overlay: boolean }>`
   ${({ $overlay }) =>
     $overlay &&
     `
-      flex items-end
-      absolute left-0 top-0
-      w-full h-full
+      absolute left-0 bottom-0
+      w-full
       p-4
-      text-md lg:text-xl text-white font-bold
+      bg-black/30
+      text-md lg:text-xl text-gray-100
+      backdrop-blur
     `}
 `;
 

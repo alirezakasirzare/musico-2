@@ -4,6 +4,12 @@ export interface ArtistModel {
   image: string;
 }
 
+export interface CategoryModel {
+  id: number;
+  name: string;
+  image: string;
+}
+
 export interface TopSliderModel {
   id: number;
   text: string;
