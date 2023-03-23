@@ -36,7 +36,7 @@ function MusicListGroup(props: MusicListGroupProps) {
       ))}
       <ListItem>
         <ListLink href={`/album/${albumId}`} $dark>
-          نمایش همه
+          نمایش آلبوم
         </ListLink>
       </ListItem>
     </List>
