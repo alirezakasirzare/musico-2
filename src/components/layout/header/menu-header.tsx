@@ -52,7 +52,7 @@ function MenuHeader(props: MenuHeaderProps) {
       hovered: false,
     },
     {
-      text: 'پلی لیست ها',
+      text: 'آهنگ ها',
       id: '/salam3',
       hovered: false,
     },

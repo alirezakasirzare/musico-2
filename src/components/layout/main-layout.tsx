@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import tw from 'tailwind-styled-components';
 
 import MainHeader from './header/main-header';
-import MainFooter from './main-footer';
+import MainFooter from './footer/main-footer';
 import { iranSansFont } from '@/helpers/font-utils';
 
 const MainContent = tw.main`
