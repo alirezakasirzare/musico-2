@@ -1,8 +1,12 @@
 import tw from 'tailwind-styled-components';
 
 import PrivaceText from './privace-text';
-import FooterList from './FooterList';
+import FooterList from './footer-list';
 import { ListFooterItemsInterface } from '@/types/layout';
+
+const Footer = tw.footer`
+  border-t border-gray-200
+`;
 
 const ListGrid = tw.div`
   grid grid-cols-1 sm:grid-cols-3 gap-8
@@ -57,7 +61,7 @@ function MainFooter() {
   ];
 
   return (
-    <footer>
+    <Footer>
       <ListGrid>
         <FooterList items={artistItems} />
 
@@ -66,7 +70,7 @@ function MainFooter() {
         <FooterList items={musicsItems} />
       </ListGrid>
       <PrivaceText />
-    </footer>
+    </Footer>
   );
 }
 

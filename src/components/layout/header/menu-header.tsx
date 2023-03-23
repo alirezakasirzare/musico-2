@@ -48,7 +48,7 @@ function MenuHeader(props: MenuHeaderProps) {
     },
     {
       text: 'آلبوم ها',
-      id: '/salam2',
+      id: '/album',
       hovered: false,
     },
     {
