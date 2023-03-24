@@ -15,6 +15,7 @@ const CardLink = tw(Link)`
 const CardImage = tw(Image)<{ $overlay: boolean }>`
   w-full
   transition-all
+  rounded-sm
   group-hover:brightness-90
   ${({ $overlay }) => ($overlay ? '' : '')}
 `;

@@ -43,7 +43,7 @@ function MenuHeader(props: MenuHeaderProps) {
   >([
     {
       text: 'هنرمندان',
-      id: '/salam1',
+      id: '/artist',
       hovered: false,
     },
     {

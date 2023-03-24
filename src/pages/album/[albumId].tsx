@@ -7,9 +7,10 @@ import SimpleCard from '@/components/ui/cards/simple-card';
 import { albumApi, musicApi } from '@/api/req-api';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
 import { AlbumModel, MusicModel } from '@/types/models-type';
+import FadeViewport from '@/components/animations/fade-viewport';
 
 const Grid = tw.div`
-  grid grid-cols-1 sm:grid-cols-3 gap-2
+  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2
   p-3
 `;
 
@@ -27,11 +28,12 @@ function AlbumDetailPage(props: AlbumDetailPage) {
 
       <Grid>
         {musics.map((music) => (
-          <SimpleCard
-            text={music.name}
-            path={`/music/${music.id}`}
-            key={music.id}
-          ></SimpleCard>
+          <FadeViewport key={music.id}>
+            <SimpleCard
+              text={music.name}
+              path={`/music/${music.id}`}
+            ></SimpleCard>
+          </FadeViewport>
         ))}
       </Grid>
     </>

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import tw from 'tailwind-styled-components';
 
 const Card = tw.div`
-  flex justify-between
+  flex flex-col-reverse sm:flex-row justify-between
   p-3
 `;
 
@@ -15,7 +15,7 @@ const CardText = tw.h3`
 `;
 
 const CardImage = tw(Image)`
-  w-4/12
+  w-full sm:w-4/12
   h-auto
 `;
 

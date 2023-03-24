@@ -1,6 +1,7 @@
 import tw from 'tailwind-styled-components';
 
 import AlbumContent from '@/components/content/album-content';
+import FadeViewport from '@/components/animations/fade-viewport';
 import { albumApi } from '@/api/req-api';
 import { AlbumModel, MusicModel } from '@/types/models-type';
 
@@ -40,7 +41,9 @@ function AlbumListPage(props: AlbumListPageProps) {
   return (
     <Grid>
       {albums.map((album) => (
-        <AlbumContent key={album.id} album={album} musics={musicItems} />
+        <FadeViewport key={album.id}>
+          <AlbumContent album={album} musics={musicItems} />
+        </FadeViewport>
       ))}
     </Grid>
   );
