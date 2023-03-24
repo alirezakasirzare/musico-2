@@ -53,7 +53,7 @@ function MenuHeader(props: MenuHeaderProps) {
     },
     {
       text: 'آهنگ ها',
-      id: '/salam3',
+      id: '/music',
       hovered: false,
     },
   ]);
