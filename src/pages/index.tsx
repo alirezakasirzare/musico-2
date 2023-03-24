@@ -101,8 +101,18 @@ function HomePage(props: HomePageProps) {
       <LinkCardLists items={linkCardItems} />
 
       <LatestContentGrid>
-        <ContentList items={musicItems} title="موزیک های اخیر" icon={FaMusic} />
-        <ContentList items={albumItems} title="آلبوم های اخیر" icon={FaImage} />
+        <ContentList
+          items={musicItems}
+          title="موزیک های اخیر"
+          icon={FaMusic}
+          path="/music"
+        />
+        <ContentList
+          items={albumItems}
+          title="آلبوم های اخیر"
+          icon={FaImage}
+          path="/album"
+        />
       </LatestContentGrid>
 
       <LinkCardLists items={categoryItems} overlayCards bigger />

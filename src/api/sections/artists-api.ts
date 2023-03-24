@@ -10,3 +10,8 @@ export async function getAll() {
   const res = await axiosReq.get<ArtistModel[]>('/artists');
   return res.data;
 }
+
+export async function getById(id: number | string) {
+  const res = await axiosReq.get<ArtistModel[]>(`/artists/${id}`);
+  return res.data;
+}

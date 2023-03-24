@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 import { IconType } from 'react-icons';
 
@@ -10,34 +11,52 @@ const Header = tw.header`
   pb-2 mb-2
 `;
 
+const HeaderContent = tw.div`
+  text-sm 
+  flex justify-center items-center gap-2
+  text-gray-500
+`;
+
+const CardLink = tw(Link)`
+  bg-gray-500 hover:bg-gray-600 text-white
+  transition-colors  
+  py-1 px-2 
+  text-sm 
+  rounded-sm
+`;
+
+const ListItem = tw.li`
+  mb-2 last:mb-0 
+  h-20
+`;
+
 interface MusicPlaylistProps {
   items: LinkCardInterface[];
   title: string;
   icon: IconType;
+  path?: string;
 }
 
 function ContentList(props: MusicPlaylistProps) {
-  const { items, title, icon: Icon } = props;
+  const { items, title, icon: Icon, path } = props;
 
   return (
-    <article className="">
+    <article>
       <Header>
-        <div className="text-sm flex justify-center items-center gap-2 text-gray-500">
+        <HeaderContent>
           <Icon />
           <strong>{title}</strong>
-        </div>
-        <button className="bg-gray-500 hover:bg-gray-600 transition-colors text-white py-1 px-2 text-sm rounded-sm">
-          نمایش همه
-        </button>
+        </HeaderContent>
+        {path && <CardLink href={path}>نمایش همه</CardLink>}
       </Header>
 
       <ul>
         {items.map((item) => (
-          <li key={item.text} className="mb-2 last:mb-0 h-20">
+          <ListItem key={item.text}>
             <FadeViewport>
               <HorizentalLinkCard {...item} />
             </FadeViewport>
-          </li>
+          </ListItem>
         ))}
       </ul>
     </article>
