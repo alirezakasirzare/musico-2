@@ -17,6 +17,7 @@ const CardText = tw.h3`
 const CardImage = tw(Image)`
   w-full sm:w-4/12
   h-auto
+  rounded-sm
 `;
 
 interface HeadCardProps {

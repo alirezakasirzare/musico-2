@@ -12,6 +12,6 @@ export async function getAll() {
 }
 
 export async function getById(id: number | string) {
-  const res = await axiosReq.get<ArtistModel[]>(`/artists/${id}`);
+  const res = await axiosReq.get<ArtistModel>(`/artists/${id}`);
   return res.data;
 }
