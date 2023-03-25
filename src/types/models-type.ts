@@ -1,8 +1,10 @@
-import { ApiBaseData, MediaInterface } from './axios-type';
+import { ApiBaseData, BaseFindManyResults, MediaInterface } from './axios-type';
 
 export interface ArtistModel extends ApiBaseData {
   name: string;
   image: MediaInterface | null;
+  albums: BaseFindManyResults<AlbumModel> | null;
+  musics: BaseFindManyResults<MusicModel> | null;
 }
 
 export interface CategoryModel extends ApiBaseData {

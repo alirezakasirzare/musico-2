@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import { GetStaticPropsContext } from 'next';
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { FaImage, FaMusic } from 'react-icons/fa';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -7,8 +7,8 @@ import HeadCard from '@/components/ui/cards/head-card';
 import ContentList from '@/components/content/content-list';
 import { albumApi, artistsApi, musicApi } from '@/api/req-api';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
-import { AlbumModel, ArtistModel, MusicModel } from '@/types/models-type';
 import { LinkCardInterface } from '@/types/cards-type';
+import { optionalImagePath } from '@/helpers/path-utils';
 
 const LatestContentGrid = tw.div`
   grid grid-cols-1 md:grid-cols-2 gap-8
@@ -16,40 +16,43 @@ const LatestContentGrid = tw.div`
   bg-gray-100 
 `;
 
-interface ArtistDetailPageProps {
-  artist: ArtistModel;
-  musics: MusicModel[];
-  albums: AlbumModel[];
-}
-
-function ArtistDetailPage(props: ArtistDetailPageProps) {
+function ArtistDetailPage(
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) {
   const { artist, musics, albums } = props;
 
   // musics
-  const musicItems: LinkCardInterface[] = musics.map((music) => {
-    const newCategory: LinkCardInterface = {
-      image: `${IMAGE_BASE_URL}/${music.image}`,
-      path: `/artist/${music.id}`,
-      text: music.name,
-    };
+  const musicItems: LinkCardInterface[] =
+    musics?.data.map((music) => {
+      const newCategory: LinkCardInterface = {
+        image: optionalImagePath(music.attributes.image?.data?.attributes.url),
+        path: `/artist/${music.id}`,
+        text: music.attributes.name,
+      };
 
-    return newCategory;
-  });
+      return newCategory;
+    }) || [];
 
   // albums
-  const albumItems: LinkCardInterface[] = albums.map((album) => {
-    const newCategory: LinkCardInterface = {
-      image: `${IMAGE_BASE_URL}/${album.image}`,
-      path: `/artist/${album.id}`,
-      text: album.name,
-    };
+  const albumItems: LinkCardInterface[] =
+    albums?.data.map((album) => {
+      const newCategory: LinkCardInterface = {
+        image: optionalImagePath(album.attributes.image?.data?.attributes.url),
+        path: `/artist/${album.id}`,
+        text: album.attributes.name,
+      };
 
-    return newCategory;
-  });
+      return newCategory;
+    }) || [];
 
   return (
     <>
-      <HeadCard image={IMAGE_BASE_URL + artist.image} text={artist.name} />
+      <HeadCard
+        image={optionalImagePath(
+          artist.data.attributes.image?.data?.attributes.url
+        )}
+        text={artist.data.attributes.name}
+      />
 
       <LatestContentGrid>
         <ContentList items={musicItems} title="موزیک ها" icon={FaMusic} />
@@ -67,11 +70,15 @@ export async function getStaticProps(context: GetStaticPropsContext<Params>) {
   const { params } = context;
   const artistId = params?.artistId || 0;
 
-  const artist = await artistsApi.getById(artistId);
+  const artist = await artistsApi.getById(artistId, [
+    'albums',
+    'image',
+    'musics',
+  ]);
 
-  const musics = await musicApi.getAll();
+  const albums = artist.data.attributes.albums;
 
-  const albums = await albumApi.getAll();
+  const musics = artist.data.attributes.musics;
 
   return {
     props: {
@@ -85,7 +92,7 @@ export async function getStaticProps(context: GetStaticPropsContext<Params>) {
 export async function getStaticPaths() {
   const artists = await artistsApi.getAll();
 
-  const pathsArtists = artists.map((artist) => ({
+  const pathsArtists = artists.data.map((artist) => ({
     params: { artistId: artist.id.toString() },
   }));
 
