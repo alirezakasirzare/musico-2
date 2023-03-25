@@ -5,8 +5,7 @@ import { ParsedUrlQuery } from 'querystring';
 
 import HeadCard from '@/components/ui/cards/head-card';
 import ContentList from '@/components/content/content-list';
-import { albumApi, artistsApi, musicApi } from '@/api/req-api';
-import { IMAGE_BASE_URL } from '@/config/setting-config';
+import { artistsApi } from '@/api/req-api';
 import { LinkCardInterface } from '@/types/cards-type';
 import { optionalImagePath } from '@/helpers/path-utils';
 

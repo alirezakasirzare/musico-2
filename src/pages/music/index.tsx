@@ -1,20 +1,16 @@
 import LinkCardLists from '@/components/ui/lists/link-card-list';
 import { musicApi } from '@/api/req-api';
-import { MusicModel } from '@/types/models-type';
 import { LinkCardInterface } from '@/types/cards-type';
-import { IMAGE_BASE_URL } from '@/config/setting-config';
+import { optionalImagePath } from '@/helpers/path-utils';
+import { InferGetStaticPropsType } from 'next';
 
-interface MusicListPageProps {
-  musics: MusicModel[];
-}
-
-function MusicListPage(props: MusicListPageProps) {
+function MusicListPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { musics } = props;
 
-  const musicsItems: LinkCardInterface[] = musics.map((music) => ({
-    image: IMAGE_BASE_URL + music.image,
+  const musicsItems: LinkCardInterface[] = musics.data.map((music) => ({
+    image: optionalImagePath(music.attributes.image?.data?.attributes.url),
     path: `/music/${music.id}`,
-    text: music.name,
+    text: music.attributes.name,
   }));
 
   return <LinkCardLists items={musicsItems} />;
