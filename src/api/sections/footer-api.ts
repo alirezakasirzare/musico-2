@@ -4,7 +4,7 @@ import type { FooterModel } from '@/types/models-type';
 
 export async function getAll() {
   const res = await axiosReq.get<BaseFindOneResult<FooterModel>>(
-    `http://localhost:1337/api/footer?populate=musics,albums,artists`
+    `footer?populate=musics,albums,artists`
   );
 
   return res.data;

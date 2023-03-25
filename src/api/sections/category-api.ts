@@ -8,7 +8,7 @@ export async function getAll(populateOptions: PopulateOptions = ['image']) {
   const populate = populateOptions.join(',');
 
   const res = await axiosReq.get<BaseFindManyResults<CategoryModel>>(
-    `http://localhost:1337/api/categories?populate=${populate}`
+    `categories?populate=${populate}`
   );
   return res.data;
 }

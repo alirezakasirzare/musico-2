@@ -8,7 +8,7 @@ export async function getAll(populateOptions: PopulateOptions = ['image']) {
   const populate = populateOptions.join(',');
 
   const res = await axiosReq.get<BaseFindManyResults<AlbumModel>>(
-    `http://localhost:1337/api/albums?populate=${populate}`
+    `albums?populate=${populate}`
   );
 
   return res.data;
@@ -21,7 +21,7 @@ export async function getSome(
   const populate = populateOptions.join(',');
 
   const res = await axiosReq.get<BaseFindManyResults<AlbumModel>>(
-    `http://localhost:1337/api/albums?pagination[limit]=${count}&populate=${populate}`
+    `albums?pagination[limit]=${count}&populate=${populate}`
   );
   return res.data;
 }
@@ -33,7 +33,7 @@ export async function getById(
   const populate = populateOptions.join(',');
 
   const res = await axiosReq.get<BaseFindOneResult<AlbumModel>>(
-    `http://localhost:1337/api/albums/${id}?populate=${populate}`
+    `albums/${id}?populate=${populate}`
   );
   return res.data;
 }
