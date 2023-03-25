@@ -1,5 +1,5 @@
 import tw from 'tailwind-styled-components';
-import { GetStaticPropsContext } from 'next';
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
 import HeadCard from '@/components/ui/cards/head-card';
@@ -8,29 +8,32 @@ import { albumApi, musicApi } from '@/api/req-api';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
 import { AlbumModel, MusicModel } from '@/types/models-type';
 import FadeViewport from '@/components/animations/fade-viewport';
+import { optionalImagePath } from '@/helpers/path-utils';
 
 const Grid = tw.div`
   grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2
   p-3
 `;
 
-interface AlbumDetailPage {
-  album: AlbumModel;
-  musics: MusicModel[];
-}
-
-function AlbumDetailPage(props: AlbumDetailPage) {
+function AlbumDetailPage(
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) {
   const { album, musics } = props;
 
   return (
     <>
-      <HeadCard text={album.name} image={IMAGE_BASE_URL + album.image} />
+      <HeadCard
+        text={album.data.attributes.name}
+        image={optionalImagePath(
+          album.data.attributes.image?.data?.attributes.url
+        )}
+      />
 
       <Grid>
-        {musics.map((music) => (
+        {musics?.data.map((music) => (
           <FadeViewport key={music.id}>
             <SimpleCard
-              text={music.name}
+              text={music.attributes.name}
               path={`/music/${music.id}`}
             ></SimpleCard>
           </FadeViewport>
@@ -49,9 +52,10 @@ export async function getStaticProps(context: GetStaticPropsContext<Params>) {
 
   const albumId = params?.albumId || 0;
 
-  const musics = await musicApi.getAll();
+  const album = await albumApi.getById(albumId, ['image', 'musics']);
 
-  const album = await albumApi.getOne(albumId);
+  const musics = album.data.attributes.musics;
+
   return {
     props: {
       album,
@@ -61,9 +65,9 @@ export async function getStaticProps(context: GetStaticPropsContext<Params>) {
 }
 
 export async function getStaticPaths() {
-  const albums = await albumApi.getAll();
+  const albums = await albumApi.getAll([]);
 
-  const pathsAlbums = albums.map((album) => ({
+  const pathsAlbums = albums.data.map((album) => ({
     params: { albumId: album.id.toString() },
   }));
 
