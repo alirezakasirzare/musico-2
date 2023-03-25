@@ -2,6 +2,7 @@ import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 
 import { MusicModel } from '@/types/models-type';
+import { ApiResult } from '@/types/axios-type';
 
 const List = tw.ul`
   flex flex-col gap-1
@@ -21,7 +22,7 @@ const ListLink = tw(Link)<{ $dark?: boolean }>`
 `;
 
 interface MusicListGroupProps {
-  items: MusicModel[];
+  items: ApiResult<MusicModel>[] | undefined;
   albumId: number;
 }
 function MusicListGroup(props: MusicListGroupProps) {
@@ -29,9 +30,9 @@ function MusicListGroup(props: MusicListGroupProps) {
 
   return (
     <List>
-      {items.map((item) => (
+      {items?.map((item) => (
         <ListItem key={item.id}>
-          <ListLink href={`/music/${item.id}`}>{item.name}</ListLink>
+          <ListLink href={`/music/${item.id}`}>{item.attributes.name}</ListLink>
         </ListItem>
       ))}
       <ListItem>

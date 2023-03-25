@@ -1,4 +1,4 @@
-interface ApiResult<T> {
+export interface ApiResult<T> {
   id: number;
   attributes: T;
 }

@@ -5,6 +5,12 @@ import tw from 'tailwind-styled-components';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
 import MusicListGroup from './music-list-group';
 import { AlbumModel, MusicModel } from '@/types/models-type';
+import { optionalImagePath } from '@/helpers/path-utils';
+import {
+  ApiResult,
+  BaseFindManyResults,
+  BaseFindOneResult,
+} from '@/types/axios-type';
 
 const Card = tw.div`
   flex flex-col-reverse md:flex-row justify-between
@@ -24,22 +30,24 @@ const CardImage = tw(Image)`
 `;
 
 interface ContentListItemCardProps {
-  album: AlbumModel;
-  musics: MusicModel[];
+  album: ApiResult<AlbumModel>;
 }
 
 function AlbumContent(props: ContentListItemCardProps) {
-  const { album, musics } = props;
+  const { album } = props;
 
   return (
     <Card>
       <CardContent>
-        <strong className="block text-center">{album.name}</strong>
-        <MusicListGroup items={musics} albumId={album.id} />
+        <strong className="block text-center">{album.attributes.name}</strong>
+        <MusicListGroup
+          items={album.attributes.musics?.data}
+          albumId={album.id}
+        />
       </CardContent>
       <CardImage
-        src={IMAGE_BASE_URL + album.image}
-        alt={album.name}
+        src={optionalImagePath(album.attributes.image?.data?.attributes.url)}
+        alt={album.attributes.name}
         width={500}
         height={500}
       />
