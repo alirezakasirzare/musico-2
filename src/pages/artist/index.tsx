@@ -1,21 +1,20 @@
+import { InferGetStaticPropsType } from 'next';
+
 import LinkCardLists from '@/components/ui/lists/link-card-list';
 import { artistsApi } from '@/api/req-api';
-import { IMAGE_BASE_URL } from '@/config/setting-config';
 import { LinkCardInterface } from '@/types/cards-type';
-import { ArtistModel } from '@/types/models-type';
+import { optionalImagePath } from '@/helpers/path-utils';
 
-interface ArtistListPageProps {
-  artists: ArtistModel[];
-}
-
-function ArtistListPage(props: ArtistListPageProps) {
+function ArtistListPage(props: InferGetStaticPropsType<typeof getStaticProps>) {
   const { artists } = props;
 
-  const artistsItems: LinkCardInterface[] = artists.map((artist) => ({
-    image: IMAGE_BASE_URL + artist.image,
+  const artistsItems: LinkCardInterface[] = artists.data.map((artist) => ({
+    image: optionalImagePath(artist.attributes?.image?.data?.attributes.url),
     path: `/artist/${artist.id}`,
-    text: artist.name,
+    text: artist.attributes.name,
   }));
+
+  console.log('artistsItems', artistsItems);
 
   return <LinkCardLists items={artistsItems} />;
 }

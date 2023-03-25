@@ -1,31 +1,28 @@
-export interface ArtistModel {
-  id: number;
+import { ApiBaseData, MediaInterface } from './axios-type';
+
+export interface ArtistModel extends ApiBaseData {
   name: string;
-  image: string;
+  image: MediaInterface | null;
 }
 
-export interface CategoryModel {
-  id: number;
+export interface CategoryModel extends ApiBaseData {
   name: string;
-  image: string;
+  image: MediaInterface | null;
 }
 
-export interface MusicModel {
-  id: number;
+export interface MusicModel extends ApiBaseData {
   name: string;
-  image: string;
-  src: string;
+  image: MediaInterface | null;
+  audio: MediaInterface;
 }
 
-export interface AlbumModel {
-  id: number;
+export interface AlbumModel extends ApiBaseData {
   name: string;
-  image: string;
+  image: MediaInterface | null;
 }
 
-export interface TopSliderModel {
-  id: number;
+export interface TopSliderModel extends ApiBaseData {
   text: string;
-  image: string;
+  image: MediaInterface | null;
   path: string;
 }
