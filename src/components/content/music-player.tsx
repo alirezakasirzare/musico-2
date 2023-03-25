@@ -51,8 +51,6 @@ function MusicPlayer() {
   const getForamtedTime = (timeLeft: number) => {
     const duration = audioRef.current?.duration;
     return ((timeLeft || 0) / (duration || 1)) * 100;
-    // const timeLeft = audioRef?.current?.currentTime;
-    // setPercentTimeLeft();
   };
 
   useEffect(() => {
