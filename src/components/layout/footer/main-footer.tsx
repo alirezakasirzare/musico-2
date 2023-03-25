@@ -3,6 +3,10 @@ import tw from 'tailwind-styled-components';
 import PrivaceText from './privace-text';
 import FooterList from './footer-list';
 import { ListFooterItemsInterface } from '@/types/layout';
+import { useEffect, useState } from 'react';
+import { footerApi } from '@/api/req-api';
+import { BaseFindOneResult } from '@/types/axios-type';
+import { FooterModel } from '@/types/models-type';
 
 const Footer = tw.footer`
   border-t border-gray-200
@@ -15,59 +19,41 @@ const ListGrid = tw.div`
 `;
 
 function MainFooter() {
-  const artistItems: ListFooterItemsInterface[] = [
-    {
-      text: 'salam',
-      path: '/salam',
-    },
-    {
-      text: 'salam',
-      path: '/salam',
-    },
-    {
-      text: 'salam',
-      path: '/salam',
-    },
-  ];
+  const [data, setData] = useState<BaseFindOneResult<FooterModel>>();
 
-  const albumsItems: ListFooterItemsInterface[] = [
-    {
-      text: 'salam',
-      path: '/salam',
-    },
-    {
-      text: 'salam',
-      path: '/salam',
-    },
-    {
-      text: 'salam',
-      path: '/salam',
-    },
-  ];
+  useEffect(() => {
+    footerApi.getAll().then((newData) => {
+      setData(newData);
+      console.log(newData);
+    });
+  }, []);
 
-  const musicsItems: ListFooterItemsInterface[] = [
-    {
-      text: 'salam',
-      path: '/salam',
-    },
-    {
-      text: 'salam',
-      path: '/salam',
-    },
-    {
-      text: 'salam',
-      path: '/salam',
-    },
-  ];
+  const artistItems: ListFooterItemsInterface[] =
+    data?.data?.attributes?.artists?.data.map((item) => ({
+      path: `/artist/${item.id}`,
+      text: item.attributes.name,
+    })) || [];
+
+  const albumItems: ListFooterItemsInterface[] =
+    data?.data?.attributes?.albums?.data.map((item) => ({
+      path: `/album/${item.id}`,
+      text: item.attributes.name,
+    })) || [];
+
+  const musicItems: ListFooterItemsInterface[] =
+    data?.data?.attributes?.musics?.data.map((item) => ({
+      path: `/music/${item.id}`,
+      text: item.attributes.name,
+    })) || [];
 
   return (
     <Footer>
       <ListGrid>
-        <FooterList items={artistItems} />
+        <FooterList items={artistItems} title="هنرمندان منتخب" />
 
-        <FooterList items={albumsItems} />
+        <FooterList items={albumItems} title="آلبوم های منتخب" />
 
-        <FooterList items={musicsItems} />
+        <FooterList items={musicItems} title="آهنگ های منتخب" />
       </ListGrid>
       <PrivaceText />
     </Footer>

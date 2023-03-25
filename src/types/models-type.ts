@@ -24,6 +24,12 @@ export interface AlbumModel extends ApiBaseData {
   musics: BaseFindManyResults<MusicModel> | null;
 }
 
+export interface FooterModel extends ApiBaseData {
+  musics: BaseFindManyResults<MusicModel> | null;
+  albums: BaseFindManyResults<AlbumModel> | null;
+  artists: BaseFindManyResults<ArtistModel> | null;
+}
+
 export interface TopSliderModel extends ApiBaseData {
   text: string;
   image: MediaInterface | null;

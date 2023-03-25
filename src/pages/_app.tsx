@@ -9,7 +9,9 @@ import '@/assets/styles/globals.css';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App(props: AppProps) {
+  const { Component, pageProps } = props;
+
   return (
     <MotionConfig transition={{ duration: 0.5, type: 'keyframes' }}>
       <IconContext.Provider value={{ className: 'text-sm' }}>
