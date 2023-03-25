@@ -4,13 +4,23 @@ import type { MusicModel } from '@/types/models-type';
 
 type PopulateOptions = ('audio' | 'category' | 'image' | 'album' | 'artist')[];
 
-export async function getAll(
-  populateOptions: PopulateOptions = ['image', 'audio']
-) {
+export async function getAll(populateOptions: PopulateOptions = ['image']) {
   const populate = populateOptions.join(',');
 
   const res = await axiosReq.get<BaseFindManyResults<MusicModel>>(
     `http://localhost:1337/api/musics?populate=${populate}`
+  );
+  return res.data;
+}
+
+export async function getSome(
+  count: number,
+  populateOptions: PopulateOptions = ['image']
+) {
+  const populate = populateOptions.join(',');
+
+  const res = await axiosReq.get<BaseFindManyResults<MusicModel>>(
+    `http://localhost:1337/api/musics?pagination[limit]=${count}&populate=${populate}`
   );
   return res.data;
 }

@@ -10,11 +10,13 @@ export interface ArtistModel extends ApiBaseData {
 export interface CategoryModel extends ApiBaseData {
   name: string;
   image: MediaInterface | null;
+  musics: BaseFindManyResults<MusicModel> | null;
 }
 
 export interface MusicModel extends ApiBaseData {
   name: string;
   image: MediaInterface | null;
+  slider_image: MediaInterface | null;
   audio: MediaInterface | null;
 }
 
@@ -30,8 +32,6 @@ export interface FooterModel extends ApiBaseData {
   artists: BaseFindManyResults<ArtistModel> | null;
 }
 
-export interface TopSliderModel extends ApiBaseData {
-  text: string;
-  image: MediaInterface | null;
-  path: string;
+export interface SliderModel extends ApiBaseData {
+  musics: BaseFindManyResults<MusicModel> | null;
 }

@@ -4,8 +4,15 @@ import type { ArtistModel } from '@/types/models-type';
 
 type PopulateOptions = ('albums' | 'musics' | 'image')[];
 
-export async function getSome(count: number) {
-  const res = await axiosReq.get<ArtistModel[]>(`/artists?_limit=${count}`);
+export async function getSome(
+  count: number,
+  populateOptions: PopulateOptions = ['image']
+) {
+  const populate = populateOptions.join(',');
+
+  const res = await axiosReq.get<BaseFindManyResults<ArtistModel>>(
+    `http://localhost:1337/api/artists?pagination[limit]=${count}&populate=${populate}`
+  );
   return res.data;
 }
 

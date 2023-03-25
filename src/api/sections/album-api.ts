@@ -14,6 +14,18 @@ export async function getAll(populateOptions: PopulateOptions = ['image']) {
   return res.data;
 }
 
+export async function getSome(
+  count: number,
+  populateOptions: PopulateOptions = ['image']
+) {
+  const populate = populateOptions.join(',');
+
+  const res = await axiosReq.get<BaseFindManyResults<AlbumModel>>(
+    `http://localhost:1337/api/albums?pagination[limit]=${count}&populate=${populate}`
+  );
+  return res.data;
+}
+
 export async function getById(
   id: number | string,
   populateOptions: PopulateOptions = ['image']

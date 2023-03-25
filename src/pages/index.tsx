@@ -5,22 +5,17 @@ import LinkCardLists from '@/components/ui/lists/link-card-list';
 import ContentList from '@/components/content/content-list';
 import {
   artistsApi,
-  topSliderApi,
   categoryApi,
   musicApi,
   albumApi,
+  SliderApi,
 } from '@/api/req-api';
-import {
-  AlbumModel,
-  ArtistModel,
-  CategoryModel,
-  MusicModel,
-  TopSliderModel,
-} from '@/types/models-type';
-import { IMAGE_BASE_URL } from '@/config/setting-config';
+
 import { FaMusic, FaImage } from 'react-icons/fa';
 import { LinkCardInterface } from '@/types/cards-type';
 import { TopCarouselInterface } from '@/types/sliders-type';
+import { InferGetStaticPropsType } from 'next';
+import { optionalImagePath } from '@/helpers/path-utils';
 
 const LatestContentGrid = tw.div`
   grid grid-cols-1 md:grid-cols-2 gap-8
@@ -28,77 +23,72 @@ const LatestContentGrid = tw.div`
   bg-gray-100 
 `;
 
-interface HomePageProps {
-  topCarousels: TopSliderModel[];
-  artists: ArtistModel[];
-  categories: CategoryModel[];
-  musics: MusicModel[];
-  albums: AlbumModel[];
-}
-
-function HomePage(props: HomePageProps) {
-  const { topCarousels, artists, categories, musics, albums } = props;
+function HomePage(props: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { slider, artists, musics, albums, categories } = props;
 
   // carousel items
-  const carouselItems: TopCarouselInterface[] = topCarousels.map((carousel) => {
-    const newCarousel: LinkCardInterface = {
-      image: IMAGE_BASE_URL + carousel.image,
-      path: carousel.path,
-      text: carousel.text,
-    };
+  const carouselItems: TopCarouselInterface[] =
+    slider?.data?.attributes?.musics?.data?.map((music) => {
+      const newCarousel: LinkCardInterface = {
+        image: optionalImagePath(
+          music.attributes.slider_image?.data?.attributes?.url
+        ),
+        path: `/music/${music.id}`,
+        text: music.attributes.name,
+      };
 
-    return newCarousel;
-  });
+      return newCarousel;
+    }) || [];
 
-  // lnik card items
-  const linkCardItems: LinkCardInterface[] = artists.map((artist) => {
+  // artist items
+  const artistItems: LinkCardInterface[] = artists.data.map((artist) => {
     const newArtist: LinkCardInterface = {
-      image: `${IMAGE_BASE_URL}/${artist.image}`,
+      image: optionalImagePath(artist.attributes.image?.data?.attributes.url),
       path: `/artist/${artist.id}`,
-      text: artist.name,
+      text: artist.attributes.name,
     };
 
     return newArtist;
   });
 
   // category items
-  const categoryItems: LinkCardInterface[] = categories.map((category) => {
+  const categoryItems: LinkCardInterface[] = categories.data.map((category) => {
     const newCategory: LinkCardInterface = {
-      image: `${IMAGE_BASE_URL}/${category.image}`,
-      path: `/artist/${category.id}`,
-      text: category.name,
+      image: optionalImagePath(category.attributes.image?.data?.attributes.url),
+      path: `/category/${category.id}`,
+      text: category.attributes.name,
     };
 
     return newCategory;
   });
 
   // musics
-  const musicItems: LinkCardInterface[] = musics.map((music) => {
-    const newCategory: LinkCardInterface = {
-      image: `${IMAGE_BASE_URL}/${music.image}`,
+  const musicItems: LinkCardInterface[] = musics.data.map((music) => {
+    const newMusic: LinkCardInterface = {
+      image: optionalImagePath(music.attributes.image?.data?.attributes.url),
       path: `/artist/${music.id}`,
-      text: music.name,
+      text: music.attributes.name,
     };
 
-    return newCategory;
+    return newMusic;
   });
 
   // albums
-  const albumItems: LinkCardInterface[] = albums.map((album) => {
-    const newCategory: LinkCardInterface = {
-      image: `${IMAGE_BASE_URL}/${album.image}`,
+  const albumItems: LinkCardInterface[] = albums.data.map((album) => {
+    const newAlbum: LinkCardInterface = {
+      image: optionalImagePath(album.attributes.image?.data?.attributes.url),
       path: `/artist/${album.id}`,
-      text: album.name,
+      text: album.attributes.name,
     };
 
-    return newCategory;
+    return newAlbum;
   });
 
   return (
     <>
       <TopCarousel items={carouselItems} />
 
-      <LinkCardLists items={linkCardItems} />
+      <LinkCardLists items={artistItems} />
 
       <LatestContentGrid>
         <ContentList
@@ -121,19 +111,19 @@ function HomePage(props: HomePageProps) {
 }
 
 export async function getStaticProps() {
-  const topCarousels = await topSliderApi.getAll();
+  const slider = await SliderApi.get();
 
   const artists = await artistsApi.getSome(6);
 
-  const musics = await musicApi.getAll();
+  const musics = await musicApi.getSome(10);
 
-  const albums = await albumApi.getAll();
+  const albums = await albumApi.getSome(10);
 
   const categories = await categoryApi.getAll();
 
   return {
     props: {
-      topCarousels,
+      slider,
       artists,
       categories,
       musics,
