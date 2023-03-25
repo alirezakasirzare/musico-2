@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 
 const Menu = tw.nav<{ $vertical: boolean }>`
   ${({ $vertical }) => !$vertical && 'hidden sm:block'}
@@ -38,25 +39,33 @@ interface MenuHeaderProps {
 function MenuHeader(props: MenuHeaderProps) {
   const { vertical } = props;
 
-  const [menuList, setMenuList] = useState<
-    { text: string; id: string; hovered: boolean }[]
-  >([
+  const router = useRouter();
+
+  const initMenuItems = () => [
     {
       text: 'هنرمندان',
       id: '/artist',
-      hovered: false,
+      hovered: router.pathname.includes('/artist'),
     },
     {
       text: 'آلبوم ها',
       id: '/album',
-      hovered: false,
+      hovered: router.pathname.includes('/album'),
     },
     {
       text: 'آهنگ ها',
       id: '/music',
-      hovered: false,
+      hovered: router.pathname.includes('/music'),
     },
-  ]);
+  ];
+
+  const [menuList, setMenuList] = useState<
+    { text: string; id: string; hovered: boolean }[]
+  >(initMenuItems());
+
+  useEffect(() => {
+    setMenuList(initMenuItems());
+  }, [router.pathname]);
 
   const hoverMenuItem = (id: string) => {
     setMenuList((prevData) =>
@@ -71,7 +80,7 @@ function MenuHeader(props: MenuHeaderProps) {
     setMenuList((prevData) =>
       prevData.map((item) => ({
         ...item,
-        hovered: false,
+        hovered: router.pathname.includes(item.id),
       }))
     );
   };

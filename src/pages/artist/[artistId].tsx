@@ -25,7 +25,7 @@ function ArtistDetailPage(
     musics?.data.map((music) => {
       const newCategory: LinkCardInterface = {
         image: optionalImagePath(music.attributes.image?.data?.attributes.url),
-        path: `/artist/${music.id}`,
+        path: `/music/${music.id}`,
         text: music.attributes.name,
       };
 
@@ -37,7 +37,7 @@ function ArtistDetailPage(
     albums?.data.map((album) => {
       const newCategory: LinkCardInterface = {
         image: optionalImagePath(album.attributes.image?.data?.attributes.url),
-        path: `/artist/${album.id}`,
+        path: `/album/${album.id}`,
         text: album.attributes.name,
       };
 
