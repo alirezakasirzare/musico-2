@@ -15,7 +15,7 @@ export interface CategoryModel extends ApiBaseData {
 export interface MusicModel extends ApiBaseData {
   name: string;
   image: MediaInterface | null;
-  audio: MediaInterface;
+  audio: MediaInterface | null;
 }
 
 export interface AlbumModel extends ApiBaseData {

@@ -1,23 +1,31 @@
-import { GetStaticPropsContext } from 'next';
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
 import HeadCard from '@/components/ui/cards/head-card';
 import MusicPlayer from '@/components/content/music-player';
 import { musicApi } from '@/api/req-api';
 import { IMAGE_BASE_URL } from '@/config/setting-config';
-import { MusicModel } from '@/types/models-type';
+import { optionalImagePath } from '@/helpers/path-utils';
 
-interface MusicDetailPageProps {
-  music: MusicModel;
-}
-
-function MusicDetailPage(props: MusicDetailPageProps) {
+function MusicDetailPage(
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) {
   const { music } = props;
 
   return (
     <>
-      <HeadCard image={IMAGE_BASE_URL + music.image} text={music.name} />
-      <MusicPlayer />
+      <HeadCard
+        image={optionalImagePath(
+          music.data.attributes.image?.data?.attributes.url
+        )}
+        text={music.data.attributes.name}
+      />
+      <MusicPlayer
+        srcAudio={
+          IMAGE_BASE_URL +
+          (music.data.attributes.audio?.data?.attributes.url || '')
+        }
+      />
     </>
   );
 }
@@ -42,7 +50,7 @@ export async function getStaticProps(context: GetStaticPropsContext<Params>) {
 export async function getStaticPaths() {
   const musics = await musicApi.getAll();
 
-  const pathsMusics = musics.map((music) => ({
+  const pathsMusics = musics.data.map((music) => ({
     params: { musicId: music.id.toString() },
   }));
 

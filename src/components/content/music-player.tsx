@@ -26,7 +26,13 @@ const Button = tw.button`
   text-gray-400
 `;
 
-function MusicPlayer() {
+interface MusicPlayerProps {
+  srcAudio: string;
+}
+
+function MusicPlayer(props: MusicPlayerProps) {
+  const { srcAudio } = props;
+
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // play and pause music
@@ -73,12 +79,7 @@ function MusicPlayer() {
 
   return (
     <>
-      <audio
-        className="hidden"
-        src="https://media-vip.my-pishvaz.com/musicfa/tagdl/ati/Homayoun Shajaryan - Diare Asheghihayam (320).mp3?st=PUTLAJ8nngGOXP3XBuP3sg&e=1679648842"
-        controls
-        ref={audioRef}
-      ></audio>
+      <audio className="hidden" src={srcAudio} controls ref={audioRef}></audio>
 
       <Container>
         <OuterLine>
